@@ -11,6 +11,6 @@ export class Warrior extends Character {
   override attack(opponent:Character) {
     console.log(`${this.name}は${this.weapon}で攻撃した！`);
     opponent.takeDamage(40);
-    opponent.takeDamage(this.power);
+    // opponent.takeDamage(this.power);
   }
 }
