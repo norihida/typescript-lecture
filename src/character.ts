@@ -1,6 +1,6 @@
 export abstract class Character {
   protected name: string; // インスタンスからはアクセス出来ないが、継承先からはアクセスできる
-  protected hp: number; // インスタンスからも継承先からもアクセス出来ない
+  protected hp: number; 
   protected power: number;
 
   constructor(name: string, hp: number, power:number) {
@@ -15,7 +15,6 @@ export abstract class Character {
 
   
 // ダメージを受けて hp を減らす public メソッド takeDamage(damage: number): void を追加する
-// ※ いま Enemy にある takeDamage を基底クラスに引き上げる形でOK
     takeDamage(damage: number): void {
     this.hp = Math.max(0, this.hp - damage);
   }
