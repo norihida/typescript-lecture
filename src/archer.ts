@@ -16,7 +16,6 @@ export class Archer extends Character {
     this.arrows--;
     console.log(`${this.name} は矢を放った!`);
 
-    opponent.takeDamage(30);
-    // opponent.takeDamage(this.power);
+    opponent.takeDamage(this.power);
   }
 }
