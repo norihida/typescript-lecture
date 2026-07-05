@@ -15,11 +15,6 @@ export class Enemy extends Character {
     return this.hp / this.maxHp;
   }
 
-  // ダメージを受ける takeDamage メソッド（mainブランチの変更を維持）
-  takeDamage(damage: number): void {
-    this.hp = Math.max(0, this.hp - damage);
-  }
-
   // 通常時 : name + "は攻撃してきた！"
   // 残り HP が 30% 以下 : name + "は必死に抵抗している！"
   override attack(opponent: Character): void {
