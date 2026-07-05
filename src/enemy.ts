@@ -28,11 +28,7 @@ export class Enemy extends Character {
     } else {
       console.log(`${this.name}は攻撃してきた!`);
     }
-<<<<<<< HEAD
+
       opponent.takeDamage(this.power);
-=======
-    opponent.takeDamage(20);
-    // opponent.takeDamage(this.power);
->>>>>>> 4f4a7917dbc260818deb463fa6f09cf7ca1f9d4c
   }
 }
