@@ -1,14 +1,16 @@
 export abstract class Character {
-  protected name: string; // インスタンスからはアクセス出来ないが、継承先からはアクセスできる
+  public readonly name: string; // インスタンスからはアクセス出来ないが、継承先からはアクセスできる
   protected hp: number;
   protected power: number;
   protected defense: number;
+  protected isPoisoned: boolean;
 
   constructor(name: string, hp: number, power: number, defense: number) {
     this.name = name;
     this.hp = hp;
     this.power = power;
     this.defense = defense;
+    this.isPoisoned = false; //trueにすると最初から毒状態になっちゃうので、falseとする。
   }
 
   showStatus() {

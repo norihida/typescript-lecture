@@ -7,21 +7,21 @@ const slime = new Enemy("スライム", 50);
 warrior.showStatus();
 slime.showStatus();
 
-while(!warrior.isDead() && !slime.isDead()){
-    warrior.attack(slime);
-    slime.showStatus();
-    if(slime.isDead()){
-        break;
-    }
-    slime.attack(warrior);
-    warrior.showStatus();
-        if(warrior.isDead()){
-        break;
-    }
+while (!warrior.isDead() && !slime.isDead()) {
+  warrior.attack(slime);
+  slime.showStatus();
+  if (slime.isDead()) {
+    break;
+  }
+  slime.attack(warrior);
+  warrior.showStatus();
+  if (warrior.isDead()) {
+    break;
+  }
 }
 
 if (warrior.isDead()) {
-    console.log("スライムの勝利！");
+  console.log(`${slime.name}の勝利！`);
 } else {
-    console.log("アーサーの勝利！");
+  console.log(`${warrior.name}の勝利！`);
 }
