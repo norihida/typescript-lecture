@@ -1,14 +1,13 @@
 import { Character } from "./character.ts";
 
 export class Mage extends Character {
-
-  constructor(name:string, hp:number){
-    super(name,hp,30);
+  constructor(name: string, hp: number) {
+    super(name, hp, 30, 10);
   }
-  
-  override attack(opponent:Character) {
+
+  override attack(opponent: Character) {
     console.log(`${this.name}は魔法を唱えた！`);
 
-      opponent.takeDamage(this.power);
+    opponent.takeDamage(this.power);
   }
 }

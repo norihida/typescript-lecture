@@ -1,14 +1,14 @@
-import { Character } from './character.ts';
+import { Character } from "./character.ts";
 
 export class Warrior extends Character {
   private weapon: string;
 
   constructor(name: string, hp: number, weapon: string) {
-    super(name, hp, 40); // super() <- 継承元 (character) の constructor
+    super(name, hp, 40, 30); // super() <- 継承元 (character) の constructor
     this.weapon = weapon;
   }
 
-  override attack(opponent:Character) {
+  override attack(opponent: Character) {
     console.log(`${this.name}は${this.weapon}で攻撃した！`);
 
     opponent.takeDamage(this.power);

@@ -4,7 +4,7 @@ export class Archer extends Character {
   private arrows: number;
 
   constructor(name: string, hp: number, arrows: number) {
-    super(name, hp, 30);
+    super(name, hp, 30, 10);
     this.arrows = arrows;
   }
 

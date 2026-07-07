@@ -6,7 +6,7 @@ export class Enemy extends Character {
 
   // maxHp プロパティの初期化
   constructor(name: string, hp: number) {
-    super(name, hp, 20);
+    super(name, hp, 20, 20);
     this.maxHp = hp;
   }
 
@@ -24,6 +24,6 @@ export class Enemy extends Character {
       console.log(`${this.name}は攻撃してきた!`);
     }
 
-      opponent.takeDamage(this.power);
+    opponent.takeDamage(this.power);
   }
 }
