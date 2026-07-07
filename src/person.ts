@@ -2,7 +2,7 @@ export class Person {
   // プロパティ (クラスが持つデータ)
   private name: string;
   private age: number;
-  private password: string;
+  protected password: string;
   private readonly birthYear: number;
 
   // コンストラクタ
