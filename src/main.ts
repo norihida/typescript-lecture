@@ -9,48 +9,30 @@ const slime = new Enemy("スライム", 50);
 warrior.showStatus();
 slime.showStatus();
 
-// while (!warrior.isDead() && !slime.isDead()) {
-//   warrior.attack(slime);
-//   slime.showStatus();
-//   if (slime.isDead()) {
-//     break;
-//   }
-//   slime.attack(warrior);
-//   warrior.showStatus();
-//   if (warrior.isDead()) {
-//     break;
-//   }
-// }
-
-// if (warrior.isDead()) {
-//   console.log(`${slime.name}の勝利！`);
-// } else {
-//   console.log(`${warrior.name}の勝利！`);
-// }
-
 console.log("--- ステータス確認 ---");
 mage.showStatus();
 slime.showStatus();
 
 console.log("--- 戦闘開始 ---");
 
-// --- 戦闘開始 ---
 while (true) {
   // --- キャスターのターン ---
-  mage.updateStatus(); // 毒の更新
+  console.log(`\n【${mage.name}のターン】`); // 行を空けてターン開始を明示
+  mage.updateStatus(); // 1. まず状態異常を処理（毒ダメージなど）
   if (mage.isDead()) break;
 
-  mage.attack(slime); // 攻撃（ここで毒を付与しても、このターンはダメージを受けない）
+  mage.attack(slime);  // 2. その後に攻撃
   if (slime.isDead()) break;
 
   // --- スライムのターン ---
-  slime.updateStatus(); // 毒の更新
+  console.log(`\n【${slime.name}のターン】`); // 行を空けてターン開始を明示
+  slime.updateStatus(); // 1. まず状態異常を処理（毒ダメージなど）
   if (slime.isDead()) break;
 
-  slime.attack(mage);
+  slime.attack(mage);  // 2. その後に攻撃
   if (mage.isDead()) break;
   
-  console.log("----------------");
+  console.log("----------------------------");
 }
 
 console.log("--- 戦闘終了 ---");
