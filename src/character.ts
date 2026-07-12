@@ -74,6 +74,24 @@ isStatusAffected(effectName: string): boolean {
 
     return this.statusEffects.length > 0;
   }
+
+    takeHeal(amount: number): void {
+    // 死んでいる場合は回復できない（蘇生が必要）というルールにするのが一般的です
+    if (this.isDead()) {
+      console.log(`${this.name}は倒れていて回復を受け付けない！`);
+      return;
+    }
+    this.hp += amount;
+    console.log(`${this.name}のHPが${amount}回復した！`);
+    this.showStatus();
+  }
+
+  // 蘇生用の特殊な回復（HPをセットする）
+  reviveWithHp(amount: number): void {
+    this.hp = amount;
+    console.log(`${this.name}は生き返った！`);
+    this.showStatus();
+  }
 }
 
 // 3. 毒の効果
