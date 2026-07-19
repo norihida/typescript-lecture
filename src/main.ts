@@ -65,3 +65,20 @@ priest.heal(mage);
 
 console.log("\n--- 戦線復帰 ---");
 mage.attack(slime); // 再び攻撃ができるようになる
+
+//例外処理
+function divide(a:number, b:number):number{
+  if(b === 0){
+    throw new Error("0で割ることはできません")
+  }
+  return a / b ;
+}
+
+try{
+  console.log("成功",divide(10,2));
+  console.log("失敗",divide(10,0));
+} catch(error){
+  console.error((error as Error).message);  
+} finally{
+  console.log("計算を終了しました");
+}
