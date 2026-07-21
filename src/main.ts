@@ -90,3 +90,43 @@ try {
 } finally {
   console.log("計算を終了しました");
 }
+
+function purchase(
+  itemInput: string,
+  quantityInput: string,
+  stock: number,
+): void {
+  if (itemInput.trim().length === 0) {
+    throw new ValidationError("商品名を入力してください。");
+  }
+  const quantity = Number(quantityInput);
+  if (!Number.isInteger(quantity) || quantity <= 0) {
+    throw new ValidationError("数量は1以上の整数で入力してください。");
+  }
+  if (stock < quantity) {
+    throw new ValidationError("在庫が不足しています...");
+  }
+  console.log("購入しました");
+}
+
+function onPurchase(
+  itemInput: string,
+  quantityInput: string,
+  stock: number,
+): void {
+  try {
+    purchase(itemInput, quantityInput, stock);
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      console.error("入力エラー", error.message);
+    } else {
+      console.error("想定外のエラーが発生しました");
+    }
+  } finally {
+    console.log("購入処理が完了しました");
+  }
+}
+onPurchase("りんご", "3", 10); //購入しました：りんご × 3
+onPurchase("", "3", 10); //商品名を入力してください。
+onPurchase("みかん", "0", 10); //数量は1以上の整数で入力してください。
+onPurchase("ぶどう", "20", 5); //在庫が不足しています（在庫：5）
