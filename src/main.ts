@@ -1,6 +1,6 @@
 // import { Warrior } from "./warrior";
 import { Enemy } from "./enemy";
-import{Mage} from "./mage";
+import { Mage } from "./mage";
 import { HolyPriest } from "./holy-priest";
 
 // const warrior = new Warrior("アーサー", 200, "エクスカリバー");
@@ -32,7 +32,7 @@ import { HolyPriest } from "./holy-priest";
 
 //   slime.attack(mage);  // 2. その後に攻撃
 //   if (mage.isDead()) break;
-  
+
 //   console.log("----------------------------");
 // }
 
@@ -50,7 +50,7 @@ const priest = new HolyPriest("司祭", 100);
 console.log("--- 悲劇の発生 ---");
 // スライムの猛攻で魔道士が倒れる
 slime.attack(mage);
-slime.attack(mage); 
+slime.attack(mage);
 
 if (mage.isDead()) {
   console.log(`${mage.name}が力尽きた...`);
@@ -66,19 +66,27 @@ priest.heal(mage);
 console.log("\n--- 戦線復帰 ---");
 mage.attack(slime); // 再び攻撃ができるようになる
 
-//例外処理
-function divide(a:number, b:number):number{
-  if(b === 0){
-    throw new Error("0で割ることはできません")
+class ValidationError extends Error {
+  constructor(message: string) {
+    super(message);
   }
-  return a / b ;
 }
 
-try{
-  console.log("成功",divide(10,2));
-  console.log("失敗",divide(10,0));
-} catch(error){
-  console.error((error as Error).message);  
-} finally{
+//例外処理
+function divide(a: number, b: number): number {
+  if (b === 0) {
+    throw new ValidationError("0で割ることはできません");
+  }
+  return a / b;
+}
+
+try {
+  console.log("成功", divide(10, 2));
+  console.log("失敗", divide(10, 0));
+} catch (error) {
+  if (error instanceof ValidationError) {
+    console.error(error);
+  }
+} finally {
   console.log("計算を終了しました");
 }
