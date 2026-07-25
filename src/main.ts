@@ -130,3 +130,35 @@ onPurchase("りんご", "3", 10); //購入しました：りんご × 3
 onPurchase("", "3", 10); //商品名を入力してください。
 onPurchase("みかん", "0", 10); //数量は1以上の整数で入力してください。
 onPurchase("ぶどう", "20", 5); //在庫が不足しています（在庫：5）
+
+const userAges = new Map<string,number>();
+userAges.set("佐藤", 30);
+userAges.set("鈴木", 25);
+userAges.set("高橋", 20);
+
+for(const[name,age] of userAges){
+  console.log(`${name}さんは、${age}歳です。`);
+}
+
+const uniqueNumbers = new Set<number>();
+uniqueNumbers.add(1);
+uniqueNumbers.add(2);
+uniqueNumbers.add(3);
+uniqueNumbers.add(2);
+uniqueNumbers.delete(1);
+
+console.log(uniqueNumbers.has(1));
+console.log(uniqueNumbers.size);
+
+for(const num of uniqueNumbers){
+  console.log(num);
+}
+
+function isValidEmail(email: string): boolean {
+    // ここにコードを追加
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+}
+
+console.log(isValidEmail("test@example.com")); // true
+console.log(isValidEmail("invalid-email")); // false
