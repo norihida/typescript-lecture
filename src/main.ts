@@ -162,3 +162,13 @@ function isValidEmail(email: string): boolean {
 
 console.log(isValidEmail("test@example.com")); // true
 console.log(isValidEmail("invalid-email")); // false
+
+const now = new Date();
+console.log(now.toISOString()); // 現在のISO形式の日付
+console.log(now.getFullYear()); // 年を取得
+console.log(now.getMonth() + 1); // 月を取得（0-11）
+console.log(now.getDate()); // 日を取得
+
+const futureDate = new Date();
+futureDate.setDate(now.getDate() + 7);
+console.log(`1週間後: ${futureDate.toDateString()}`);
