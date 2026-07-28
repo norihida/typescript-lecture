@@ -69,106 +69,68 @@ mage.attack(slime); // 再び攻撃ができるようになる
 class ValidationError extends Error {
   constructor(message: string) {
     super(message);
+    this.name = "ValidationError";
   }
-}
-
-//例外処理
-function divide(a: number, b: number): number {
-  if (b === 0) {
-    throw new ValidationError("0で割ることはできません");
-  }
-  return a / b;
-}
-
-try {
-  console.log("成功", divide(10, 2));
-  console.log("失敗", divide(10, 0));
-} catch (error) {
-  if (error instanceof ValidationError) {
-    console.error(error);
-  }
-} finally {
-  console.log("計算を終了しました");
-}
-
-function purchase(
-  itemInput: string,
-  quantityInput: string,
-  stock: number,
-): void {
-  if (itemInput.trim().length === 0) {
-    throw new ValidationError("商品名を入力してください。");
-  }
-  const quantity = Number(quantityInput);
-  if (!Number.isInteger(quantity) || quantity <= 0) {
-    throw new ValidationError("数量は1以上の整数で入力してください。");
-  }
-  if (stock < quantity) {
-    throw new ValidationError("在庫が不足しています...");
-  }
-  console.log("購入しました");
-}
-
-function onPurchase(
-  itemInput: string,
-  quantityInput: string,
-  stock: number,
-): void {
-  try {
-    purchase(itemInput, quantityInput, stock);
-  } catch (error) {
-    if (error instanceof ValidationError) {
-      console.error("入力エラー", error.message);
-    } else {
-      console.error("想定外のエラーが発生しました");
-    }
-  } finally {
-    console.log("購入処理が完了しました");
-  }
-}
-onPurchase("りんご", "3", 10); //購入しました：りんご × 3
-onPurchase("", "3", 10); //商品名を入力してください。
-onPurchase("みかん", "0", 10); //数量は1以上の整数で入力してください。
-onPurchase("ぶどう", "20", 5); //在庫が不足しています（在庫：5）
-
-const userAges = new Map<string,number>();
-userAges.set("佐藤", 30);
-userAges.set("鈴木", 25);
-userAges.set("高橋", 20);
-
-for(const[name,age] of userAges){
-  console.log(`${name}さんは、${age}歳です。`);
-}
-
-const uniqueNumbers = new Set<number>();
-uniqueNumbers.add(1);
-uniqueNumbers.add(2);
-uniqueNumbers.add(3);
-uniqueNumbers.add(2);
-uniqueNumbers.delete(1);
-
-console.log(uniqueNumbers.has(1));
-console.log(uniqueNumbers.size);
-
-for(const num of uniqueNumbers){
-  console.log(num);
 }
 
 function isValidEmail(email: string): boolean {
-    // ここにコードを追加
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(email);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-console.log(isValidEmail("test@example.com")); // true
-console.log(isValidEmail("invalid-email")); // false
+const registeredEmails = new Set<string>();
+const users = new Map<string, string>();
 
-const now = new Date();
-console.log(now.toISOString()); // 現在のISO形式の日付
-console.log(now.getFullYear()); // 年を取得
-console.log(now.getMonth() + 1); // 月を取得（0-11）
-console.log(now.getDate()); // 日を取得
+// 奥のロジック：不正ならガード節で早めにthrow
+function registerUser(nameInput: string, emailInput: string): void {
+  const name = nameInput.trim();
+  if (name.length === 0) {
+    throw new ValidationError("名前を入力してください。");
+  }
 
-const futureDate = new Date();
-futureDate.setDate(now.getDate() + 7);
-console.log(`1週間後: ${futureDate.toDateString()}`);
+  const email = emailInput.trim();
+  // TODO(Step 1): メールアドレスの形式チェックをここに追加する
+  if (!isValidEmail(email)) {
+    throw new ValidationError("メールアドレスの形式が不正です");
+  }
+
+  // if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  //   throw new ValidationError("正しいメールアドレスを入力してください");
+  // }
+
+  if (registeredEmails.has(email)) {
+    throw new ValidationError("このメールアドレスは既に登録されています");
+  }
+
+  users.set(name, email);
+
+  registeredEmails.add(email);
+
+  console.log(`登録しました: ${name} <${email}>`);
+}
+
+// 画面に近い側：catchしてユーザーに伝える
+function onSubmit(nameInput: string, emailInput: string): void {
+  try {
+    registerUser(nameInput, emailInput);
+  } catch (error: unknown) {
+    if (error instanceof ValidationError) {
+      console.error(`⚠️ ${error.message}`);
+    } else {
+      console.error("想定外のエラーが発生しました。", error);
+    }
+  }
+}
+
+onSubmit("Alice", "alice@example.com");
+onSubmit("Bob", "invalid-email");
+onSubmit("", "carol@example.com");
+onSubmit("Charlie", "alice@example.com");
+onSubmit("Taro", "taro@example.com");
+onSubmit("Hanako", "hanako@example.com");
+
+console.log("登録者一覧");
+
+for (const [name, email] of users) {
+  console.log(`${name} <${email}>`);
+}
+console.log(`登録者数:${users.size}人`);
