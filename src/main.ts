@@ -78,10 +78,8 @@ const API = "https://long-graphical-warrant-fairfield.trycloudflare.com/";
 async function getReceiptData(): Promise<string> {
   const response = await fetch(API);
   const data = await response.json();
-  console.log(data);
   return data.id;
 }
-
 getReceiptData();
 
 function isValidEmail(email: string): boolean {
@@ -92,7 +90,10 @@ const registeredEmails = new Set<string>();
 const users = new Map<string, string>();
 
 // 奥のロジック：不正ならガード節で早めにthrow
-function registerUser(nameInput: string, emailInput: string): void {
+async function registerUser(
+  nameInput: string,
+  emailInput: string,
+): Promise<void> {
   const name = nameInput.trim();
   if (name.length === 0) {
     throw new ValidationError("名前を入力してください。");
@@ -116,13 +117,15 @@ function registerUser(nameInput: string, emailInput: string): void {
 
   registeredEmails.add(email);
 
-  console.log(`登録しました: ${name} <${email}>`);
+  const receiptId = await getReceiptData();
+
+  console.log(`登録しました: ${name} <${email}>(${receiptId})`);
 }
 
 // 画面に近い側：catchしてユーザーに伝える
-function onSubmit(nameInput: string, emailInput: string): void {
+async function onSubmit(nameInput: string, emailInput: string): Promise<void> {
   try {
-    registerUser(nameInput, emailInput);
+    await registerUser(nameInput, emailInput);
   } catch (error: unknown) {
     if (error instanceof ValidationError) {
       console.error(`⚠️ ${error.message}`);
